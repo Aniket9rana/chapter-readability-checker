@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blue Pencil</title>
+<meta name="description" content="Paste a chapter and see its reading level, with the five hardest sentences marked. Free, and your text never leaves your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="mast">
+    <h1 class="brand">Blue Pencil</h1>
+    <p class="pitch">Paste a chapter. See its reading level, and the five sentences that cost your reader the most.</p>
+    <p class="privacy">Free. Everything runs in this tab, so your manuscript is never uploaded.</p>
+  </header>
+
+  <section class="slip" aria-label="Settings">
+    <div class="field">
+      <label for="audience">Who is it for?</label>
+      <select id="audience">
+        <option value="middle">Middle grade (ages 8 to 12)</option>
+        <option value="ya">Young adult</option>
+        <option value="adult" selected>General adult fiction</option>
+        <option value="literary">Literary fiction</option>
+      </select>
+    </div>
+    <div class="field field-check">
+      <input type="checkbox" id="merge" checked>
+      <label for="merge">Count short quoted lines with the sentence around them
+        <span class="hint">"No." and "Why?" stop dragging the grade down.</span></label>
+    </div>
+    <div class="actions">
+      <button type="button" id="sample" class="btn">Load sample</button>
+      <label class="btn" for="file">Open .txt</label>
+      <input type="file" id="file" accept=".txt,text/plain" hidden>
+      <button type="button" id="clear" class="btn">Clear</button>
+    </div>
+  </section>
+
+  <main class="grid">
+
+    <section class="sheet" aria-label="Chapter text">
+      <div class="sheet-bar">
+        <div class="seg" role="group" aria-label="View">
+          <button type="button" id="tab-paste" class="seg-btn" aria-pressed="false">Paste</button>
+          <button type="button" id="tab-marked" class="seg-btn" aria-pressed="true">Marked pages</button>
+        </div>
+        <p class="counts" id="counts" aria-live="polite"></p>
+      </div>
+      <p class="sample-note" id="sample-note" hidden>Sample chapter, written for this demo. Replace it with your own.</p>
+      <textarea id="input" class="paper manuscript" spellcheck="false" aria-label="Paste your chapter here"
+        placeholder="Paste your chapter here. Straight or curly double quotes mark dialogue."></textarea>
+      <div id="marked" class="paper manuscript marked" aria-label="Your chapter with the hardest sentences marked"></div>
+    </section>
+
+    <aside class="report" aria-label="Report">
+
+      <div class="card score" id="score">
+        <div class="score-row">
+          <div class="big">
+            <span class="eyebrow">Reading ease</span>
+            <span class="num" id="ease">–</span>
+            <span class="band" id="ease-band"></span>
+          </div>
+          <div class="big">
+            <span class="eyebrow">Grade level</span>
+            <span class="num" id="grade">–</span>
+            <span class="band" id="grade-band"></span>
+          </div>
+        </div>
+        <div class="ruler" aria-hidden="true">
+          <div class="ruler-target" id="ruler-target"></div>
+          <div class="ruler-tick" id="ruler-tick"></div>
+        </div>
+        <div class="ruler-scale" aria-hidden="true"><span>harder</span><span>easier</span></div>
+        <p class="verdict" id="verdict"></p>
+        <p class="vs-basic" id="vs-basic"></p>
+      </div>
+
+      <div class="card">
+        <h2>Five hardest sentences</h2>
+        <ol class="hardest" id="hardest"></ol>
+      </div>
+
+      <div class="card">
+        <h2>Paragraph by paragraph</h2>
+        <div class="strip-wrap">
+          <div class="strip-band" id="strip-band" aria-hidden="true"></div>
+          <div class="strip" id="strip"></div>
+        </div>
+        <p class="note">Taller bars read harder. The shaded band is your audience's grade range. Select a bar to jump to that paragraph.</p>
+      </div>
+
+      <div class="card">
+        <h2>Other measures</h2>
+        <table class="measures">
+          <tbody id="measures"></tbody>
+        </table>
+        <p class="note" id="measures-note"></p>
+        <button type="button" id="copy" class="btn btn-wide">Copy summary</button>
+      </div>
+
+    </aside>
+  </main>
+
+  <footer class="foot">
+    <p>Flesch Reading Ease and Flesch-Kincaid grade are the headline scores. Syllables come from a rule-based English counter with an exceptions list, so expect an occasional miss on unusual words. Dialogue is found from double quotation marks; single-quote dialogue is not detected.</p>
+  </footer>
+</div>
+
+<script src="readability.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
